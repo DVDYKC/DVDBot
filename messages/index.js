@@ -69,7 +69,7 @@ bot.dialog('/start', [
     },
     function (session, results) {
         session.userData.tower = results.response.entity;
-        session.sent("Thank for the information " + session.userData.GuessName + ". Please wait while we retriving your bill");
+        session.send("Thank for the information " + session.userData.GuessName + ". Please wait while we retriving your bill");
         session.beginDialog('/bill');
     }
     ]);
