@@ -54,18 +54,22 @@ bot.dialog('/', [
 
 bot.dialog('/start', [
     function (session) {
-        builder.Prompts.number(session, "Please enter your room number :");
+        // builder.Prompts.number(session, "Please enter your room number :");
+        builder.Prompts.text(session,"May I know your name ?");
+    },
+    function (session, results) {
+        // session.userData.RoomNumber = results.response;
+        session.userData.GuessName = results.response;
+        // builder.Prompts.text(session, "Hi Please enter your name :"); 
+        builder.Prompts.number(session,"Hi " + session.userData.GuessName + ", please enter your room number for verification :" )
     },
     function (session, results) {
         session.userData.RoomNumber = results.response;
-        builder.Prompts.text(session, "Please enter your name :"); 
-    },
-    function (session, results) {
-        session.userData.coding = results.response;
-        builder.Prompts.choice(session, "Which Tower was the room?", ["Tower 1", "Tower 2", "Tower 3"]);
+        builder.Prompts.choice(session, "... and which Tower was the room?", ["Tower 1", "Tower 2", "Tower 3"]);
     },
     function (session, results) {
         session.userData.tower = results.response.entity;
+        session.sent("Thank for the information " + session.userData.GuessName + ". Please wait while we retriving your bill");
         session.beginDialog('/bill');
     }
     ]);
