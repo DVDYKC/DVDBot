@@ -100,7 +100,7 @@ bot.dialog('/bill', [
         .tax('SGD $ 70.00')
         .total('SGD $ 1070.00')
         .buttons([
-            builder.CardAction.imBack(session, MainOptions.Confirm, MainOptions.Confirm), 
+            builder.CardAction.imBack(session, MainOptions.Confirm, MainOptions.Confirm),  
         ]);
 
     session.send(new builder.Message(session)
