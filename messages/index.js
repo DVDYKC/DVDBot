@@ -83,21 +83,28 @@ bot.dialog('/bill', [
     }
     else {
         
-    var welcomeCard = new builder.HeroCard(session)
-        .title('Your Hotel Bill')
-        .subtitle('Total bill will be $ 1000. ')
-        .text('Please click confirm for express checkout, Alternatively please visit our friendly customer service for further assistence.')
-        .images([
-            new builder.CardImage(session)
-                .url('http://www.todayupfeed.com/wp-content/uploads/2016/03/mbs-facts-fun-660x330.jpg')
-                .alt('Hotel')
+    var BillCard = new builder.ReceiptCard(session)
+        .title('Invoice')
+        .facts([
+            builder.Fact.create(session, '1234', 'Invoice No'),
+            builder.Fact.create(session, 'VISA 5555-****', 'Payment Method'),
         ])
+        .items([
+            builder.ReceiptItem.create(session, '$ 800.00', '2 Day Premier Room stay')
+                .quantity(1)
+                .image(builder.CardImage.create(session, 'http://www.marinabaysands.com/content/dam/singapore/marinabaysands/master/main/home/hotel/web%20redesign%20room%20images/Premier%20Room/premier-room-twin-city-500x454.jpg')),
+            builder.ReceiptItem.create(session, '$ 200.00', 'Telephony charges')
+                .quantity(720)
+                .image(builder.CardImage.create(session, 'http://designtospec.com/wp-content/uploads/2015/05/Phone.png'))
+        ])
+        .tax('SGD $ 70.00')
+        .total('SGD $ 1070.00')
         .buttons([
             builder.CardAction.imBack(session, MainOptions.Confirm, MainOptions.Confirm), 
         ]);
 
     session.send(new builder.Message(session)
-        .addAttachment(welcomeCard));
+        .addAttachment(BillCard));
     }
     }
     
